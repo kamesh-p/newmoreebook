@@ -1,0 +1,16 @@
+.bookdetails-card-componenet {
+  display: flex !important;
+  height: 400px !important;
+}
+/* .bookdetails-card-componenet-container {
+  height: 1000px !important;
+} */
+.bookdetails-para {
+  height: 150px;
+}
+.btn-shop-book-book-details {
+  margin-left: 400px;
+}
+.cardcontent-book-details {
+  background-color: #f2f2f2 !important;
+}
