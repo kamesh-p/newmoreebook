@@ -25,7 +25,7 @@ const Header = ({ length, count }) => {
   // console.log("username", user);
   // console.log("username12", user.Users.name);
   const name = user?.Users?.name || "viewers";
-  const isAdmin = user?.Users?.name === "admin";
+  const isAdmin = user?.Users?.Type === "Admin";
   let cartcount = length + count;
   return (
     <div>
@@ -44,26 +44,42 @@ const Header = ({ length, count }) => {
                   Cart
                 </Link>
               </li> */}
-                <li className="nav-item active">
-                  <Link
-                    className="nav-link"
-                    to={name === "admin" ? "/sell-admin" : "/Buy"}
-                  >
-                    <Tooltip title="Shop">
-                      <ShoppingBagIcon />
-                    </Tooltip>
-                  </Link>
-                </li>
-                <li className="nav-item active">
-                  <Link
-                    className="nav-link"
-                    to={name === "admin" ? "/admin-dashboard" : "/Sell"}
-                  >
-                    <Tooltip title="Sell">
-                      <SellIcon />
-                    </Tooltip>
-                  </Link>
-                </li>
+                {!isAdmin && (
+                  <li className="nav-item active">
+                    <Link className="nav-link" to="/Buy">
+                      <Tooltip title="Shop">
+                        <ShoppingBagIcon />
+                      </Tooltip>
+                    </Link>
+                  </li>
+                )}
+                {/* {isAdmin && (
+                  <li className="nav-item active">
+                    <Link className="nav-link" to="/sell-admin">
+                      <Tooltip title="Shop">
+                        <ShoppingBagIcon />
+                      </Tooltip>
+                    </Link>
+                  </li>
+                )} */}
+                {!isAdmin && (
+                  <li className="nav-item active">
+                    <Link className="nav-link" to="/Sell">
+                      <Tooltip title="Sell">
+                        <SellIcon />
+                      </Tooltip>
+                    </Link>
+                  </li>
+                )}
+                {isAdmin && (
+                  <li className="nav-item active">
+                    <Link className="nav-link" to="/Admindetails">
+                      <Tooltip title="Sell">
+                        <SellIcon />
+                      </Tooltip>
+                    </Link>
+                  </li>
+                )}
                 {/* {!isAdmin && (
                   <li className="nav-item active">
                     <Link className="nav-link" to="/Library">
@@ -91,7 +107,7 @@ const Header = ({ length, count }) => {
                 >
                   {!isAdmin && isAuthenticated && (
                     <Dropdown.Item eventKey="4">
-                      <Link className="Login-page" to="/history">
+                      <Link className="Login-page" to="/CRhistory">
                         <HistoryTwoToneIcon />
                         History
                       </Link>

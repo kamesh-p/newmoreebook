@@ -12,14 +12,17 @@ import Sell from "./component/Sell";
 import Library from "./component/Library";
 import Login from "./component/Login";
 import SignupPage from "./component/Signup";
+import { toast } from "react-toastify";
 
 import DialogBox from "./component/Genre";
-import AdminDashboard from "./component/AdminDash";
+import AdminDashboard from "./component/Admin/AdminDash";
 import SellDetails from "./component/SellDetails";
 import History from "./component/History";
 import Profile from "./component/Tabs";
 import Footer from "./component/Footer";
 import Sidebar from "./component/Cartslide";
+import CartHisandRent from "./component/CartHisandRentHis";
+import AdminTabs from "./component/Admin/AdminTabs";
 function App() {
   let name = "Kamesh";
   const [cartItems, setCartItems] = useState([]);
@@ -27,6 +30,7 @@ function App() {
   const [books, setBooks] = useState([]);
   const [booksState, setBooksState] = useState([]);
   const [rentedBooks, setRentedBooks] = useState([]);
+  const [confirmation, setConfirmation] = useState(false);
   const handleAddToCartandRent = (book, isRented = false) => {
     setBooksState((prevBooks) =>
       prevBooks.map((prevBook) =>
@@ -59,14 +63,27 @@ function App() {
       ...prevCartItems,
       { ...book, quantity: 1 },
     ]);
+    toast.success("Item added to cart...", {
+      autoClose: 1000,
+      position: "top-right",
+    });
   };
   const handleRemoveItem = (index) => {
+    toast.error("Item removed from cart...", {
+      autoClose: 1000,
+      position: "top-right",
+    });
     const updatedCart = [...cartItems];
     updatedCart.splice(index, 1);
     setCartItems(updatedCart);
   };
   const handleDeleteBook = (bookId) => {
+    toast.error("Item removed from cart...", {
+      autoClose: 1000,
+      position: "top-right",
+    });
     // Create a confirmation dialog before deleting the book
+
     const isConfirmed = window.confirm(
       "Are you sure you want to delete this book?"
     );
@@ -77,6 +94,13 @@ function App() {
         prevRentedBooks.filter((book) => book._id !== bookId)
       );
     }
+  };
+  const HandleopenConfirmation = () => {
+    setConfirmation(true);
+  };
+
+  const HandleCloseConfirmation = () => {
+    setConfirmation(false);
   };
 
   let length = cartItems.length;
@@ -152,10 +176,13 @@ function App() {
                 handleRemoveItem={handleRemoveItem}
                 rentedBooks={rentedBooks}
                 onDeleteBook={handleDeleteBook}
+                HandleopenConfirmation={HandleopenConfirmation}
+                HandleCloseConfirmation={HandleCloseConfirmation}
               />
             }
           />
-          {/* <Route path="/Cartslide" element={<Sidebar />} /> */}
+          <Route path="/CRhistory" element={<CartHisandRent />} />
+          <Route path="/Admindetails" element={<AdminTabs />} />
         </Routes>
       </div>
       {/* <Footer /> */}

@@ -52,16 +52,11 @@
 }
 .books-container-shop-comp {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   margin: 50px 0px 0px 180px;
 }
-.Card-indiv-book-search {
-  width: 250px !important;
-  height: 320px !important;
-  margin: 20px;
-  /* border: 1px solid rgb(154, 154, 154); */
-}
+
 /* Sidebar container */
 .shop-slide-full-container {
   display: flex;
@@ -133,4 +128,13 @@ body {
 }
 .typo-drawer {
   margin-top: 70px !important;
+}
+.Card-indiv-book-search-shop {
+  height: 270px !important;
+  width: 200px !important;
+  margin: 50px 10px 10px 50px;
+  background-color: #f2f2f2 !important;
+}
+.link-shop-comp-contanin {
+  text-decoration: none !important;
 }

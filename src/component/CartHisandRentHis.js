@@ -1,23 +1,18 @@
 import React, { useState } from "react";
 import { Typography, Tab, Tabs } from "@mui/material";
-import "./Tab.css";
-import Cart from "./Cart";
-import Library from "./Library";
+import "./cartrenthistory.css";
+import History from "./History";
+import BookingHistrory from "./BookingHistrory";
 
-const Profile = ({
-  cartItems,
-  handleRemoveItem,
-  rentedBooks,
-  onDeleteBook,
-}) => {
-  const [activeTab, setActiveTab] = useState("Cart");
+const CartHisandRent = () => {
+  const [activeTab, setActiveTab] = useState("Buy");
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
 
   return (
-    <div>
+    <div className="cartrenthistory-container">
       <Typography variant="h4" component="h1" className="tab-full-container">
         Cart For Buy and Rent
       </Typography>
@@ -31,18 +26,14 @@ const Profile = ({
         aria-label="Profile Tabs"
         className="tab-full-box"
       >
-        <Tab label="Cart" value="Cart" />
-        <Tab label="Library" value="Library" />
+        <Tab label="Buy" value="Buy" />
+        <Tab label="Rent" value="Rent" />
       </Tabs>
 
-      {activeTab === "Cart" && (
-        <Cart cartItems={cartItems} handleRemoveItem={handleRemoveItem} />
-      )}
-      {activeTab === "Library" && (
-        <Library rentedBooks={rentedBooks} onDeleteBook={onDeleteBook} />
-      )}
+      {activeTab === "Buy" && <BookingHistrory />}
+      {activeTab === "Rent" && <History />}
     </div>
   );
 };
 
-export default Profile;
+export default CartHisandRent;

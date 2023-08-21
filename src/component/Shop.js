@@ -82,7 +82,7 @@ const Shop = ({ books, handleAddToCartrent }) => {
   );
   console.log("rryytt", NonFictionTotalBooks);
 
-  const toptwentyratedbooks = sortedBooks.slice(0, 9);
+  const toptwentyratedbooks = sortedBooks.slice(0, 12);
   const selectedBooks = (() => {
     switch (selectedCategory) {
       case "Language":
@@ -184,7 +184,7 @@ const Shop = ({ books, handleAddToCartrent }) => {
           >
             Education
           </Typography>
-          <ListItem button onClick={() => setSelectedCategory("Medical")}>
+          <ListItem button onClick={() => setSelectedCategory("Medicine")}>
             <ListItemIcon>
               <MedicalServicesOutlinedIcon />
             </ListItemIcon>
@@ -334,8 +334,11 @@ const Shop = ({ books, handleAddToCartrent }) => {
       </div> */}
       <div className="books-container-shop-comp">
         {selectedBooks.map((book, index) => (
-          <Link to={{ pathname: `/book/${book._id}`, state: { book } }}>
-            <Card key={index} className="Card-indiv-book-search">
+          <Link
+            className="link-shop-comp-contanin"
+            to={{ pathname: `/book/${book._id}`, state: { book } }}
+          >
+            <Card key={index} className="Card-indiv-book-search-shop">
               <CardActionArea className="container-about-content-detail">
                 <CardMedia
                   component="img"
@@ -357,7 +360,7 @@ const Shop = ({ books, handleAddToCartrent }) => {
                 </CardContent>
               </CardActionArea>
 
-              <div className="btn-container-About">
+              {/* <div className="btn-container-About">
                 <Button
                   size="small"
                   color="info"
@@ -391,7 +394,7 @@ const Shop = ({ books, handleAddToCartrent }) => {
                     Rent
                   </Button>
                 </div>
-              </div>
+              </div> */}
             </Card>
           </Link>
         ))}

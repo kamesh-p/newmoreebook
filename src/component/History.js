@@ -52,33 +52,41 @@ const History = () => {
   );
   console.log("filtered", filteredBooks);
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
-        History
+    <Container className="history-container">
+      <Typography variant="h4" gutterBottom className="history-heading">
+        Order History
       </Typography>
-
       {isLoading ? (
-        <CircularProgress />
+        <div className="spinner-container">
+          <CircularProgress />
+        </div>
       ) : filteredBooks.length === 0 ? (
-        <Typography>No history available.</Typography>
+        <Typography variant="body1" className="no-history-message">
+          You have no order history.
+        </Typography>
       ) : (
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           {filteredBooks.map((book, index) => (
-            <Grid item xs={12} key={index}>
-              <Paper elevation={3} style={{ padding: "20px" }}>
-                <Typography variant="h6">{book.title}</Typography>
-
-                <Typography variant="body1">Price: {book.price} Rs.</Typography>
-
-                <Typography variant="body1">
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Paper elevation={3} className="history-item">
+                <Typography variant="h6" style={{ marginBottom: "8px" }}>
+                  {book.title}
+                </Typography>
+                <Typography variant="body1" color="textSecondary">
+                  Price: {book.price} Rs.
+                </Typography>
+                <Typography variant="body1" color="textSecondary">
                   End Date: {book.endDate}
                 </Typography>
-
-                <Typography variant="body1">
+                <Typography variant="body1" color="textSecondary">
                   Start Date: {book.startDate}
                 </Typography>
-
-                <Typography variant="body1">Days: {book.days}</Typography>
+                <Typography variant="body1" color="textSecondary">
+                  Days: {book.days}
+                </Typography>
+                <Typography variant="body2" className="order-id">
+                  Order ID: {book.orderId}
+                </Typography>
               </Paper>
             </Grid>
           ))}

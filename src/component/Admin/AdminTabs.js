@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { Typography, Tab, Tabs } from "@mui/material";
-import "./Tab.css";
-import Cart from "./Cart";
-import Library from "./Library";
+import "../Tab.css";
 
-const Profile = ({
-  cartItems,
-  handleRemoveItem,
-  rentedBooks,
-  onDeleteBook,
-}) => {
+import SellDetails from "../SellDetails";
+import AdminDashboard from "./AdminDash";
+
+const AdminTabs = () => {
   const [activeTab, setActiveTab] = useState("Cart");
 
   const handleTabChange = (event, newValue) => {
@@ -31,18 +27,14 @@ const Profile = ({
         aria-label="Profile Tabs"
         className="tab-full-box"
       >
-        <Tab label="Cart" value="Cart" />
-        <Tab label="Library" value="Library" />
+        <Tab label="Sell" value="Sell" />
+        <Tab label="Rented" value="Rented" />
       </Tabs>
 
-      {activeTab === "Cart" && (
-        <Cart cartItems={cartItems} handleRemoveItem={handleRemoveItem} />
-      )}
-      {activeTab === "Library" && (
-        <Library rentedBooks={rentedBooks} onDeleteBook={onDeleteBook} />
-      )}
+      {activeTab === "Sell" && <SellDetails />}
+      {activeTab === "Rented" && <AdminDashboard />}
     </div>
   );
 };
 
-export default Profile;
+export default AdminTabs;

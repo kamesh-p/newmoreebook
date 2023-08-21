@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Grid,
@@ -13,36 +13,64 @@ import {
   TextField,
   DialogContentText,
 } from "@mui/material";
+
 import { Link } from "react-router-dom";
+
 import { RadioGroup, Radio, FormControlLabel, Button } from "@mui/material";
+
 import DeleteIcon from "@mui/icons-material/Delete";
+
 import AddIcon from "@mui/icons-material/Add";
+
 import RemoveIcon from "@mui/icons-material/Remove";
-import "./Cart.css";
+
 import { useSelector } from "react-redux";
+
+import { toast } from "react-toastify";
 
 const Cart = ({ cartItems, handleRemoveItem }) => {
   const [cart, setCart] = useState(cartItems);
+
   const [dialogOpen, setDialogOpen] = useState(false);
+
   const [paymentType, setPaymentType] = useState("");
+
   const [confirmation, setConfirmation] = useState(false);
+
   const [orderDetails, setOrderDetails] = useState({});
+
   const [orders, setOrders] = useState([]);
+
   const [name, setName] = useState("");
+
   const [address, setAddress] = useState("");
+
   const [detailed, setdetailedorder] = useState([]);
+
   const user = useSelector((state) => state.auth.user);
+
+  const handlePlaceOrderClick = () => {
+    if (cartItems.length === 0) {
+      toast.error("Add items to proceed...", { position: "top-right" });
+    } else {
+      setDialogOpen(true);
+    }
+  };
 
   const handleIncreaseQuantity = (index) => {
     const updatedCart = [...cartItems];
+
     updatedCart[index].quantity += 1;
+
     setCart(updatedCart);
   };
 
   const handleDecreaseQuantity = (index) => {
     const updatedCart = [...cartItems];
+
     if (updatedCart[index].quantity > 1) {
       updatedCart[index].quantity -= 1;
+
       setCart(updatedCart);
     }
   };
@@ -56,72 +84,90 @@ const Cart = ({ cartItems, handleRemoveItem }) => {
       (accumulator, item) => accumulator + getTotalPrice(item),
       0
     );
+
     return totalPrice;
   };
 
   const HandleConfirmationbutton = () => {
     setConfirmation(true);
+    setCart([]);
     setDialogOpen(false);
 
-    // Collect the order details
     const newOrder = {
+      user: user,
       name: name,
+
       address: address,
+
       paymentType: paymentType,
-      items: cartItems, // Assuming you want to store the cart items in the order
+
+      items: cartItems,
+
       totalPrice: getTotalCartPrice(),
     };
 
+    axios.post("http://localhost:4000/orders/create-user", newOrder);
+
     // Update the orders array with the new order
+
     setOrders((prevOrders) => [...prevOrders, newOrder]);
-    axios.post("http://localhost:4000/Details/create-user", newOrder);
+
+    toast.success("Order successfully placed", { position: "top-right" });
 
     // Reset the input fields and selections
-    setOrderDetails({});
+
+    setOrderDetails([]);
+
     setName("");
+
     setAddress("");
+
     setPaymentType("");
+
     console.log("new order", newOrder);
+
     setConfirmation(false);
+
     setdetailedorder(newOrder);
   };
 
   // ... rest of your component code ...
-  console.log("ddd", detailed);
-  console.log("order:", orders);
-  console.log("oderrr", orderDetails);
 
-  axios
-    .post("http://localhost:4000/Details/create-user", detailed)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  // console.log("ddd", newOrder);
+
+  console.log("order:", orders);
+
+  console.log("oderrr", orderDetails);
 
   const HandleConfirmation = () => {
     setConfirmation(true);
+
     setDialogOpen(false);
 
     setOrders((prevOrders) => [...prevOrders, orderDetails]);
 
     setOrderDetails({});
   };
+
   const HandleCloseConfirmation = () => {
     setConfirmation(false);
   };
+
   const HandleopenConfirmation = () => {
     setConfirmation(true);
+    setCart([]);
   };
+
   const handleCloseDialog = () => {
     setDialogOpen(false);
   };
 
   // console.log("order", orders);
+
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   console.log("cart", isAuthenticated);
+
   return (
     <div className="cart-container-Cart">
       {cartItems.map((item, index) => (
@@ -134,9 +180,11 @@ const Cart = ({ cartItems, handleRemoveItem }) => {
                 style={{ width: "100px", height: "100px", borderRadius: "4px" }}
               />
             </Grid>
+
             <Grid item xs={4}>
               {item.title}
             </Grid>
+
             <Grid item xs={2}>
               <IconButton
                 aria-label="Decrease Quantity"
@@ -145,7 +193,9 @@ const Cart = ({ cartItems, handleRemoveItem }) => {
               >
                 <RemoveIcon />
               </IconButton>
+
               <span>{item.quantity}</span>
+
               <IconButton
                 aria-label="Increase Quantity"
                 onClick={() => handleIncreaseQuantity(index)}
@@ -154,9 +204,11 @@ const Cart = ({ cartItems, handleRemoveItem }) => {
                 <AddIcon />
               </IconButton>
             </Grid>
+
             <Grid item xs={1}>
               ₹{getTotalPrice(item)}
             </Grid>
+
             <Grid item xs={2}>
               <Button
                 variant="outlined"
@@ -166,23 +218,26 @@ const Cart = ({ cartItems, handleRemoveItem }) => {
                 <DeleteIcon />
               </Button>
             </Grid>
+
             <Grid item xs={12}>
               <Divider />
             </Grid>
           </Grid>
         </div>
       ))}
+
       <div className="Cart-price-order">
         <Typography variant="h6" component="h3" gutterBottom>
           Total Price: ₹{getTotalCartPrice()}
         </Typography>
+
         {isAuthenticated ? (
           <Button
             className="Cart-price-orde-btn"
             variant="contained"
             color="success"
             size="small"
-            onClick={() => setDialogOpen(true)}
+            onClick={handlePlaceOrderClick}
           >
             Place order
           </Button>
@@ -199,15 +254,19 @@ const Cart = ({ cartItems, handleRemoveItem }) => {
           </Link>
         )}
       </div>
+
       {dialogOpen && isAuthenticated && (
         <Dialog open={dialogOpen} onClose={handleCloseDialog}>
           <DialogTitle>Order Details</DialogTitle>
+
           <DialogContent>
             <DialogContentText>
               To subscribe to this website, please enter your address here. We
               will send updates occasionally.
             </DialogContentText>
+
             <br></br>
+
             <TextField
               autoFocus
               margin="dense"
@@ -217,6 +276,7 @@ const Cart = ({ cartItems, handleRemoveItem }) => {
               fullWidth
               onChange={(e) => setName(e.target.value)}
             />
+
             <TextField
               autoFocus
               margin="dense"
@@ -227,6 +287,7 @@ const Cart = ({ cartItems, handleRemoveItem }) => {
               fullWidth
               onChange={(e) => setAddress(e.target.value)}
             />
+
             <div className="cart-container-Cart">
               <Grid container spacing={2}>
                 {cartItems.map((item) => (
@@ -236,6 +297,7 @@ const Cart = ({ cartItems, handleRemoveItem }) => {
                       className="Book-list-details-paper"
                     >
                       <Typography variant="subtitle1">{item.name}</Typography>
+
                       <Typography variant="body2">
                         Quantity: {item.quantity} | Price: ${item.price} |
                         total: ₹{getTotalCartPrice()}
@@ -253,17 +315,20 @@ const Cart = ({ cartItems, handleRemoveItem }) => {
               onChange={(e) => setPaymentType(e.target.value)}
             >
               <br />
+
               <Grid spacing={2}>
                 <FormControlLabel
                   value="creditCard"
                   control={<Radio />}
                   label="Credit Card"
                 />
+
                 <FormControlLabel
                   value="paypal"
                   control={<Radio />}
                   label="PayPal"
                 />
+
                 <FormControlLabel
                   value="Cash On Delivery"
                   control={<Radio />}
@@ -271,19 +336,24 @@ const Cart = ({ cartItems, handleRemoveItem }) => {
                 />
               </Grid>
             </RadioGroup>
+
             <br />
+
             <Paper sx={{ padding: 2, marginBottom: 2 }}>
               <Typography variant="subtitle1">
                 Order Total: ₹{getTotalCartPrice()}
               </Typography>
             </Paper>
           </DialogContent>
+
           <DialogActions>
             <Button color="error" onClick={handleCloseDialog}>
               Cancel
             </Button>
+
             <Button
               // variant="outlined"
+
               color="success"
               onClick={HandleopenConfirmation}
             >
@@ -292,17 +362,22 @@ const Cart = ({ cartItems, handleRemoveItem }) => {
           </DialogActions>
         </Dialog>
       )}
+
       {/* Order confirmation dialog */}
+
       {confirmation && (
         <Dialog open={confirmation} onClose={HandleCloseConfirmation}>
           <DialogTitle>Confirmation</DialogTitle>
+
           <DialogContent>
             <DialogContentText>
               Are you sure you want to place the order?
             </DialogContentText>
           </DialogContent>
+
           <DialogActions>
             <Button onClick={HandleCloseConfirmation}>Cancel</Button>
+
             <Button color="success" onClick={HandleConfirmationbutton}>
               Confirm
             </Button>

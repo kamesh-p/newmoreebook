@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+
 import { useParams } from "react-router-dom";
+
 import { styled } from "@mui/material/styles";
+
 import {
   Typography,
   Paper,
@@ -9,18 +12,37 @@ import {
   CardMedia,
   Button,
 } from "@mui/material";
+
+import StarIcon from "@mui/icons-material/Star";
+
+import StarHalfIcon from "@mui/icons-material/StarHalf";
+
 import "./bookdetail.css";
+
 const Container = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
-  margin: theme.spacing(2),
+
+  margin: theme.spacing(4),
+
   display: "flex",
+
   flexDirection: "column",
+
   alignItems: "center",
 }));
 
 const Media = styled(CardMedia)(({ theme }) => ({
   height: 400,
+
   width: 350,
+
+  position: "relative",
+
+  transition: "transform 0.2s ease-in-out",
+
+  "&:hover": {
+    transform: "scale(0.9)",
+  },
 }));
 
 const BookDetailsPage = ({ books, handleAddToCartrent }) => {
@@ -36,25 +58,43 @@ const BookDetailsPage = ({ books, handleAddToCartrent }) => {
     return <div>Book not found.</div>;
   }
 
+  // Calculate star width based on rating
+
+  const starRating = parseFloat(book.Rating.$numberDecimal) || 0;
+
+  const fullStars = Math.floor(starRating);
+
+  const remainingStars = starRating - fullStars;
+
+  const hasHalfStar = remainingStars >= 0.25 && remainingStars < 0.75;
+
   return (
     <div>
       <Typography variant="h4" gutterBottom>
         Book details
       </Typography>
+
       <Container className="bookdetails-card-componenet">
         <Card className="bookdetails-card-full-container">
           <div className="bookdetails-card-componenet">
-            <div>
+            <div className="bimg">
               <Media image={book.imagelink} title={book.title} />
             </div>
-            <div>
+
+            <div className="cardcontent-main-div">
               <CardContent className="cardcontent-book-details">
-                <Typography variant="h5" gutterBottom>
-                  Title: {book.title}
+                <Typography className="booktit" variant="h5" gutterBottom>
+                  {book.title}
                 </Typography>
-                <Typography variant="subtitle1" gutterBottom>
+
+                <Typography
+                  className="autitle"
+                  variant="subtitle1"
+                  gutterBottom
+                >
                   Author: {book.author}
                 </Typography>
+
                 <Typography
                   variant="subtitle1"
                   paragraph
@@ -63,20 +103,21 @@ const BookDetailsPage = ({ books, handleAddToCartrent }) => {
                 >
                   {book.description}
                 </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  sx={{ textAlign: "right" }}
-                >
-                  Price: {book.price}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  sx={{ textAlign: "left" }}
-                >
-                  {book.Rating.$numberDecimal}
-                </Typography>
+
+                <div className="rating">
+                  {starRating.toFixed(1)}:
+                  {Array.from({ length: fullStars }, (_, index) => (
+                    <StarIcon key={index} className="staric" />
+                  ))}
+                  {hasHalfStar && <StarHalfIcon className="staric" />}
+                </div>
+
+                <div className="price">
+                  <Typography variant="h6" color="primary">
+                    Rs: {book.price}
+                  </Typography>
+                </div>
+
                 <div className="btn-shop-book-book-details">
                   <Button
                     variant="contained"

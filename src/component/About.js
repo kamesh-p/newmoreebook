@@ -22,6 +22,9 @@ import Shop from "./Shop";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
+import CartDashboard from "./Admin/Dashboard";
+
 const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
   const [booksState, setBooksState] = useState([]);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -193,6 +196,7 @@ const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
 
   return (
     <div className="full-about-componenet">
+      {/* <Book /> */}
       <div className="About-full-container">
         {/* <Container maxWidth="md" className="root">
           <div className="container-intro">
@@ -345,85 +349,74 @@ const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
                 }`}
               >
                 {booksStateShop.map((book, index) => (
-                  <p
-                    key={index}
-                    className="book-result"
-                    onClick={() => handleBookClick(book.title)}
+                  <Link
+                    className="link-shop-comp-contanin"
+                    to={{ pathname: `/book/${book._id}`, state: { book } }}
                   >
-                    {book.title}
-                  </p>
+                    <p
+                      key={index}
+                      className="book-result"
+                      onClick={() => handleBookClick(book.title)}
+                    >
+                      {book.title}
+                    </p>
+                  </Link>
                 ))}
               </div>
             </div>
           )}
 
-          {!showProductsshop && (
+          {/* {!showProductsshop && (
             <div className="Cart-book-shop-search">
               {booksStatebookshop.map((book, index) => (
-                <Card
-                  key={index}
-                  sx={{ maxWidth: 345 }}
-                  className="Card-indiv-book-search"
+                <Link
+                  className="link-shop-comp-contanin"
+                  to={{ pathname: `/book/${book._id}`, state: { book } }}
                 >
-                  <CardActionArea className="container-about-content-detail">
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={book.imagelink}
-                      alt={book.title}
-                    />
+                  <Card
+                    key={index}
+                    sx={{ maxWidth: 345 }}
+                    className="Card-indiv-book-search-about"
+                  >
+                    <CardActionArea className="container-about-content-detail">
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={book.imagelink}
+                        alt={book.title}
+                      />
 
-                    <CardContent className="CardContent-details">
-                      <Typography
-                        gutterBottom
-                        variant="p"
-                        component="div"
-                        className="CardContent-title"
-                      >
-                        {book.title}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
+                      <CardContent className="CardContent-details">
+                        <Typography
+                          gutterBottom
+                          variant="p"
+                          component="div"
+                          className="CardContent-title"
+                        >
+                          {book.title}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
 
-                  <div className="btn-container-About">
-                    <Button
-                      size="small"
-                      color="info"
-                      className="Btn-ViewMore-btn"
-                      onClick={() => {
-                        setSelectedBookshop(book);
-
-                        setDialogshop(true);
-                      }}
-                    >
-                      View More
-                    </Button>
-
-                    <div className="btn-shop-book">
+                    <div className="btn-container-About">
                       <Button
                         size="small"
-                        variant="contained"
                         color="info"
-                        className="Btn-Buy-shop"
-                        onClick={() => handleAddToCartrent(book)}
-                      >
-                        Buy
-                      </Button>
+                        className="Btn-ViewMore-btn"
+                        onClick={() => {
+                          setSelectedBookshop(book);
 
-                      <Button
-                        className="Btn-Buy-rent"
-                        variant="contained"
-                        color="error"
-                        onClick={() => handleAddToCartrent(book, true)}
+                          setDialogshop(true);
+                        }}
                       >
-                        Rent
+                        View More
                       </Button>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </Link>
               ))}
             </div>
-          )}
+          )} */}
 
           <Dialog open={dialogshop} onClose={handleClose}>
             <DialogTitle>Book Description</DialogTitle>
@@ -439,6 +432,11 @@ const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
             </DialogActions>
           </Dialog>
         </div>
+        {isAdmin && (
+          <div>
+            <CartDashboard />
+          </div>
+        )}
         {isAuthenticated && !isAdmin && (
           <>
             <Typography variant="h5" component="h6" className="Favarite-title">
@@ -446,67 +444,51 @@ const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
             </Typography>
             <div className="Cart-book-shop-search">
               {languageBooks.map((book, index) => (
-                <Card
-                  key={index}
-                  sx={{ maxWidth: 345 }}
-                  className="Card-indiv-book-search"
+                <Link
+                  className="link-shop-comp-contanin"
+                  to={{ pathname: `/book/${book._id}`, state: { book } }}
                 >
-                  <CardActionArea className="container-about-content-detail">
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={book.imagelink}
-                      alt={book.title}
-                    />
+                  <Card
+                    key={index}
+                    sx={{ maxWidth: 345 }}
+                    className="Card-indiv-book-search-about"
+                  >
+                    <CardActionArea className="container-about-content-detail">
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={book.imagelink}
+                        alt={book.title}
+                      />
 
-                    <CardContent className="CardContent-details">
-                      <Typography
-                        gutterBottom
-                        variant="p"
-                        component="div"
-                        className="CardContent-title"
-                      >
-                        {book.title}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
+                      <CardContent className="CardContent-details">
+                        <Typography
+                          gutterBottom
+                          variant="p"
+                          component="div"
+                          className="CardContent-title"
+                        >
+                          {book.title}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
 
-                  <div className="btn-container-About">
-                    <Button
-                      size="small"
-                      color="info"
-                      className="Btn-ViewMore-btn"
-                      onClick={() => {
-                        setSelectedBookshop(book);
-
-                        setDialogshop(true);
-                      }}
-                    >
-                      View More
-                    </Button>
-
-                    <div className="btn-shop-book">
+                    <div className="btn-container-About">
                       <Button
                         size="small"
-                        variant="contained"
                         color="info"
-                        className="Btn-Buy-shop"
-                        onClick={() => handleAddToCartrent(book)}
-                      >
-                        Buy
-                      </Button>
+                        className="Btn-ViewMore-btn"
+                        onClick={() => {
+                          setSelectedBookshop(book);
 
-                      <Button
-                        className="Btn-Buy-rent"
-                        variant="contained"
-                        color="error"
-                        onClick={() => handleAddToCartrent(book, true)}
+                          setDialogshop(true);
+                        }}
                       >
-                        Rent
+                        View More
                       </Button>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </Link>
               ))}
             </div>
           </>
@@ -518,67 +500,51 @@ const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
             </Typography>
             <div className="Cart-book-shop-search">
               {topratedLang.map((book, index) => (
-                <Card
-                  key={index}
-                  sx={{ maxWidth: 345 }}
-                  className="Card-indiv-book-search"
+                <Link
+                  className="link-shop-comp-contanin"
+                  to={{ pathname: `/book/${book._id}`, state: { book } }}
                 >
-                  <CardActionArea className="container-about-content-detail">
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={book.imagelink}
-                      alt={book.title}
-                    />
+                  <Card
+                    key={index}
+                    sx={{ maxWidth: 345 }}
+                    className="Card-indiv-book-search-about"
+                  >
+                    <CardActionArea className="container-about-content-detail">
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={book.imagelink}
+                        alt={book.title}
+                      />
 
-                    <CardContent className="CardContent-details">
-                      <Typography
-                        gutterBottom
-                        variant="p"
-                        component="div"
-                        className="CardContent-title"
-                      >
-                        {book.title}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
+                      <CardContent className="CardContent-details">
+                        <Typography
+                          gutterBottom
+                          variant="p"
+                          component="div"
+                          className="CardContent-title"
+                        >
+                          {book.title}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
 
-                  <div className="btn-container-About">
-                    <Button
-                      size="small"
-                      color="info"
-                      className="Btn-ViewMore-btn"
-                      onClick={() => {
-                        setSelectedBookshop(book);
-
-                        setDialogshop(true);
-                      }}
-                    >
-                      View More
-                    </Button>
-
-                    <div className="btn-shop-book">
+                    <div className="btn-container-About">
                       <Button
                         size="small"
-                        variant="contained"
                         color="info"
-                        className="Btn-Buy-shop"
-                        onClick={() => handleAddToCartrent(book)}
-                      >
-                        Buy
-                      </Button>
+                        className="Btn-ViewMore-btn"
+                        onClick={() => {
+                          setSelectedBookshop(book);
 
-                      <Button
-                        className="Btn-Buy-rent"
-                        variant="contained"
-                        color="error"
-                        onClick={() => handleAddToCartrent(book, true)}
+                          setDialogshop(true);
+                        }}
                       >
-                        Rent
+                        View More
                       </Button>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </Link>
               ))}
             </div>
           </>
@@ -590,67 +556,51 @@ const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
             </Typography>
             <div className="Cart-book-shop-search">
               {topratedgenre.map((book, index) => (
-                <Card
-                  key={index}
-                  sx={{ maxWidth: 345 }}
-                  className="Card-indiv-book-search"
+                <Link
+                  className="link-shop-comp-contanin-about"
+                  to={{ pathname: `/book/${book._id}`, state: { book } }}
                 >
-                  <CardActionArea className="container-about-content-detail">
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={book.imagelink}
-                      alt={book.title}
-                    />
+                  <Card
+                    key={index}
+                    sx={{ maxWidth: 345 }}
+                    className="Card-indiv-book-search-about"
+                  >
+                    <CardActionArea className="container-about-content-detail">
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={book.imagelink}
+                        alt={book.title}
+                      />
 
-                    <CardContent className="CardContent-details">
-                      <Typography
-                        gutterBottom
-                        variant="p"
-                        component="div"
-                        className="CardContent-title"
-                      >
-                        {book.title}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
+                      <CardContent className="CardContent-details">
+                        <Typography
+                          gutterBottom
+                          variant="p"
+                          component="div"
+                          className="CardContent-title"
+                        >
+                          {book.title}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
 
-                  <div className="btn-container-About">
-                    <Button
-                      size="small"
-                      color="info"
-                      className="Btn-ViewMore-btn"
-                      onClick={() => {
-                        setSelectedBookshop(book);
-
-                        setDialogshop(true);
-                      }}
-                    >
-                      View More
-                    </Button>
-
-                    <div className="btn-shop-book">
+                    <div className="btn-container-About">
                       <Button
                         size="small"
-                        variant="contained"
                         color="info"
-                        className="Btn-Buy-shop"
-                        onClick={() => handleAddToCartrent(book)}
-                      >
-                        Buy
-                      </Button>
+                        className="Btn-ViewMore-btn"
+                        onClick={() => {
+                          setSelectedBookshop(book);
 
-                      <Button
-                        className="Btn-Buy-rent"
-                        variant="contained"
-                        color="error"
-                        onClick={() => handleAddToCartrent(book, true)}
+                          setDialogshop(true);
+                        }}
                       >
-                        Rent
+                        View More
                       </Button>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </Link>
               ))}
             </div>
           </>
@@ -662,67 +612,51 @@ const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
             </Typography>
             <div className="Cart-book-shop-search">
               {topratedEducation.map((book, index) => (
-                <Card
-                  key={index}
-                  sx={{ maxWidth: 345 }}
-                  className="Card-indiv-book-search"
+                <Link
+                  className="link-shop-comp-contanin"
+                  to={{ pathname: `/book/${book._id}`, state: { book } }}
                 >
-                  <CardActionArea className="container-about-content-detail">
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={book.imagelink}
-                      alt={book.title}
-                    />
+                  <Card
+                    key={index}
+                    sx={{ maxWidth: 345 }}
+                    className="Card-indiv-book-search-about"
+                  >
+                    <CardActionArea className="container-about-content-detail">
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={book.imagelink}
+                        alt={book.title}
+                      />
 
-                    <CardContent className="CardContent-details">
-                      <Typography
-                        gutterBottom
-                        variant="p"
-                        component="div"
-                        className="CardContent-title"
-                      >
-                        {book.title}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
+                      <CardContent className="CardContent-details">
+                        <Typography
+                          gutterBottom
+                          variant="p"
+                          component="div"
+                          className="CardContent-title"
+                        >
+                          {book.title}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
 
-                  <div className="btn-container-About">
-                    <Button
-                      size="small"
-                      color="info"
-                      className="Btn-ViewMore-btn"
-                      onClick={() => {
-                        setSelectedBookshop(book);
-
-                        setDialogshop(true);
-                      }}
-                    >
-                      View More
-                    </Button>
-
-                    <div className="btn-shop-book">
+                    <div className="btn-container-About">
                       <Button
                         size="small"
-                        variant="contained"
                         color="info"
-                        className="Btn-Buy-shop"
-                        onClick={() => handleAddToCartrent(book)}
-                      >
-                        Buy
-                      </Button>
+                        className="Btn-ViewMore-btn"
+                        onClick={() => {
+                          setSelectedBookshop(book);
 
-                      <Button
-                        className="Btn-Buy-rent"
-                        variant="contained"
-                        color="error"
-                        onClick={() => handleAddToCartrent(book, true)}
+                          setDialogshop(true);
+                        }}
                       >
-                        Rent
+                        View More
                       </Button>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </Link>
               ))}
             </div>
           </>
@@ -734,67 +668,51 @@ const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
             </Typography>
             <div className="Cart-book-shop-search">
               {genreBooks.map((book, index) => (
-                <Card
-                  key={index}
-                  sx={{ maxWidth: 345 }}
-                  className="Card-indiv-book-search"
+                <Link
+                  className="link-shop-comp-contanin"
+                  to={{ pathname: `/book/${book._id}`, state: { book } }}
                 >
-                  <CardActionArea className="container-about-content-detail">
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={book.imagelink}
-                      alt={book.title}
-                    />
+                  <Card
+                    key={index}
+                    sx={{ maxWidth: 345 }}
+                    className="Card-indiv-book-search-about"
+                  >
+                    <CardActionArea className="container-about-content-detail">
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={book.imagelink}
+                        alt={book.title}
+                      />
 
-                    <CardContent className="CardContent-details">
-                      <Typography
-                        gutterBottom
-                        variant="p"
-                        component="div"
-                        className="CardContent-title"
-                      >
-                        {book.title}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
+                      <CardContent className="CardContent-details">
+                        <Typography
+                          gutterBottom
+                          variant="p"
+                          component="div"
+                          className="CardContent-title"
+                        >
+                          {book.title}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
 
-                  <div className="btn-container-About">
-                    <Button
-                      size="small"
-                      color="info"
-                      className="Btn-ViewMore-btn"
-                      onClick={() => {
-                        setSelectedBookshop(book);
-
-                        setDialogshop(true);
-                      }}
-                    >
-                      View More
-                    </Button>
-
-                    <div className="btn-shop-book">
+                    <div className="btn-container-About">
                       <Button
                         size="small"
-                        variant="contained"
                         color="info"
-                        className="Btn-Buy-shop"
-                        onClick={() => handleAddToCartrent(book)}
-                      >
-                        Buy
-                      </Button>
+                        className="Btn-ViewMore-btn"
+                        onClick={() => {
+                          setSelectedBookshop(book);
 
-                      <Button
-                        className="Btn-Buy-rent"
-                        variant="contained"
-                        color="error"
-                        onClick={() => handleAddToCartrent(book, true)}
+                          setDialogshop(true);
+                        }}
                       >
-                        Rent
+                        View More
                       </Button>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </Link>
               ))}
             </div>
           </>
@@ -807,67 +725,51 @@ const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
             </Typography>
             <div className="Cart-book-shop-search">
               {educationBooks.map((book, index) => (
-                <Card
-                  key={index}
-                  sx={{ maxWidth: 345 }}
-                  className="Card-indiv-book-search"
+                <Link
+                  className="link-shop-comp-contanin"
+                  to={{ pathname: `/book/${book._id}`, state: { book } }}
                 >
-                  <CardActionArea className="container-about-content-detail">
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={book.imagelink}
-                      alt={book.title}
-                    />
+                  <Card
+                    key={index}
+                    sx={{ maxWidth: 345 }}
+                    className="Card-indiv-book-search-about"
+                  >
+                    <CardActionArea className="container-about-content-detail">
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={book.imagelink}
+                        alt={book.title}
+                      />
 
-                    <CardContent className="CardContent-details">
-                      <Typography
-                        gutterBottom
-                        variant="p"
-                        component="div"
-                        className="CardContent-title"
-                      >
-                        {book.title}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
+                      <CardContent className="CardContent-details">
+                        <Typography
+                          gutterBottom
+                          variant="p"
+                          component="div"
+                          className="CardContent-title"
+                        >
+                          {book.title}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
 
-                  <div className="btn-container-About">
-                    <Button
-                      size="small"
-                      color="info"
-                      className="Btn-ViewMore-btn"
-                      onClick={() => {
-                        setSelectedBookshop(book);
-
-                        setDialogshop(true);
-                      }}
-                    >
-                      View More
-                    </Button>
-
-                    <div className="btn-shop-book">
+                    <div className="btn-container-About">
                       <Button
                         size="small"
-                        variant="contained"
                         color="info"
-                        className="Btn-Buy-shop"
-                        onClick={() => handleAddToCartrent(book)}
-                      >
-                        Buy
-                      </Button>
+                        className="Btn-ViewMore-btn"
+                        onClick={() => {
+                          setSelectedBookshop(book);
 
-                      <Button
-                        className="Btn-Buy-rent"
-                        variant="contained"
-                        color="error"
-                        onClick={() => handleAddToCartrent(book, true)}
+                          setDialogshop(true);
+                        }}
                       >
-                        Rent
+                        View More
                       </Button>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </Link>
               ))}
             </div>
           </>

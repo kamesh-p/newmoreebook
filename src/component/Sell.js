@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import {
   TextField,
@@ -33,6 +34,11 @@ function Sell() {
   const handleConfirmDialogOpen = () => {
     if (validateForm()) {
       setConfirmDialogOpen(true);
+    } else {
+      toast.error("All fields are mandatory...", {
+        autoClose: 1000,
+        position: "top-right",
+      });
     }
   };
 
@@ -109,7 +115,10 @@ function Sell() {
     } catch (error) {
       console.error("Error sending selling data:", error);
     }
-
+    toast.success("Book posted successfully...", {
+      autoClose: 1000,
+      position: "top-right",
+    });
     setTitle("");
     setPrice("");
     setDescription("");

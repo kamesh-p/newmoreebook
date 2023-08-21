@@ -25,9 +25,9 @@ function Footer() {
           <p>Email: MooreMarget@gmail.com</p>
         </div>
       </div>
-      <div className="footer-bottom">
+      {/* <div className="footer-bottom">
         <p>&copy; 2023 Your Company. All rights reserved.</p>
-      </div>
+      </div> */}
     </footer>
   );
 }

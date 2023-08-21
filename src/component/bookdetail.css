@@ -1,16 +1,199 @@
+.autitle {
+  font-weight: 800 !important;
+}
+
+.booktit {
+  font-weight: 1000 !important;
+}
+
+.bimg {
+  /* margin-top: 10px; */
+
+  border-radius: 15px;
+  /* margin-right: 100px; */
+  height: 450px !important;
+}
+
 .bookdetails-card-componenet {
-  display: flex !important;
-  height: 400px !important;
+  margin-top: 10px;
+
+  display: flex;
+
+  justify-content: space-between;
+  height: 450px;
 }
-/* .bookdetails-card-componenet-container {
-  height: 1000px !important;
-} */
-.bookdetails-para {
-  height: 150px;
+
+.bookdetails-card-full-container {
+  display: flex;
+
+  gap: 20px;
+
+  width: 800px;
+
+  border: 8px solid #a36302;
 }
-.btn-shop-book-book-details {
-  margin-left: 400px;
+
+.cardcontent-main-div {
+  display: flex;
+
+  height: max-content;
 }
+
 .cardcontent-book-details {
-  background-color: #f2f2f2 !important;
+  flex: 1;
+
+  border: 1px solid #eeb8b8;
+
+  padding: 20px;
+
+  border-radius: 10px;
+
+  font-weight: 1000;
+  margin-top: 10px;
+}
+
+.rating {
+  display: flex;
+
+  align-items: center;
+
+  margin-top: 10px;
+}
+
+.stars-outer {
+  display: inline-block;
+
+  position: relative;
+
+  font-size: 16px;
+
+  color: #ccc;
+}
+
+.stars-inner {
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 0;
+
+  overflow: hidden;
+
+  color: #f0c60a;
+}
+
+.rating-value {
+  margin-left: 10px;
+
+  font-size: 14px;
+
+  color: #555;
+}
+
+.Btn-Buy-shop-book-details,
+.Btn-Buy-rent-book-details {
+  width: 100%;
+
+  margin-top: 20px;
+
+  padding: 10px;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  border-radius: 4px;
+}
+
+.Btn-Buy-shop-book-details {
+  background-color: #ffa724 !important;
+
+  color: #fff;
+}
+
+.Btn-Buy-rent-book-details {
+  background-color: #007bff;
+
+  color: #fff;
+}
+
+.Btn-Buy-shop-book-details:hover,
+.Btn-Buy-rent-book-details:hover {
+  opacity: 0.9;
+}
+
+.rating {
+  display: flex;
+
+  align-items: center;
+
+  margin-top: 15px;
+}
+
+.stars-outer {
+  display: inline-flex;
+
+  font-size: 24px;
+
+  color: #ccc;
+}
+
+.bookdetails-para {
+  font-weight: 800 !important;
+}
+
+.rating-value {
+  margin-left: 10px;
+
+  font-size: 16px;
+
+  color: #555555;
+}
+
+.price {
+  margin-top: 10px;
+
+  font-weight: 800 !important;
+
+  font-size: 18px;
+
+  color: #007bff; /* Blue color */
+}
+
+.staric {
+  color: yellow;
+}
+
+.Btn-Buy-shop-book-details {
+  background-color: #f0c60a; /* Yellow color */
+
+  color: #fff;
+}
+
+.Btn-Buy-rent-book-details {
+  background-color: #007bff;
+
+  color: #fff;
+}
+
+.stars-inner::before {
+  content: "★★★★★";
+
+  display: inline-block;
+
+  width: calc((var(--star-rating) / 5) * 100%);
+
+  overflow: hidden;
+
+  color: #f0c60a;
+}
+
+.rating-value {
+  margin-left: 10px;
+
+  font-size: 16px;
+
+  color: #080703; /* Yellow color */
 }
