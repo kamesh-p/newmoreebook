@@ -23,7 +23,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
-import CartDashboard from "./Admin/Dashboard";
+import Dashboard from "./Admin/Dashboard";
 
 const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
   const [booksState, setBooksState] = useState([]);
@@ -319,54 +319,55 @@ const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
           </Slider>
         </div> */}
         {/* <Shop /> */}
-        <div className="search-bar-total-full-contaner">
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search books..."
-              value={searchQueryshop}
-              onChange={handleInputChange}
-              className="input-search-about-componenet"
-            />
-            <Button
-              className="btn-search-bar-search"
-              variant="contained"
-              color="error"
-              onClick={() => {
-                handleSearch();
-                setShowProductsshop(false);
-              }}
-            >
-              <SearchIcon />
-            </Button>
-          </div>
-
-          {showProductsshop && (
-            <div className="book-suggested-list-container ">
-              <div
-                className={`book-list-container ${
-                  showProductsshop ? "" : "hide-book-list"
-                }`}
+        {!isAdmin && (
+          <div className="search-bar-total-full-contaner">
+            <div className="search-bar">
+              <input
+                type="text"
+                placeholder="Search books..."
+                value={searchQueryshop}
+                onChange={handleInputChange}
+                className="input-search-about-componenet"
+              />
+              <Button
+                className="btn-search-bar-search"
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  handleSearch();
+                  setShowProductsshop(false);
+                }}
               >
-                {booksStateShop.map((book, index) => (
-                  <Link
-                    className="link-shop-comp-contanin"
-                    to={{ pathname: `/book/${book._id}`, state: { book } }}
-                  >
-                    <p
-                      key={index}
-                      className="book-result"
-                      onClick={() => handleBookClick(book.title)}
-                    >
-                      {book.title}
-                    </p>
-                  </Link>
-                ))}
-              </div>
+                <SearchIcon />
+              </Button>
             </div>
-          )}
 
-          {/* {!showProductsshop && (
+            {showProductsshop && (
+              <div className="book-suggested-list-container ">
+                <div
+                  className={`book-list-container ${
+                    showProductsshop ? "" : "hide-book-list"
+                  }`}
+                >
+                  {booksStateShop.map((book, index) => (
+                    <Link
+                      className="link-shop-comp-contanin"
+                      to={{ pathname: `/book/${book._id}`, state: { book } }}
+                    >
+                      <p
+                        key={index}
+                        className="book-result"
+                        onClick={() => handleBookClick(book.title)}
+                      >
+                        {book.title}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* {!showProductsshop && (
             <div className="Cart-book-shop-search">
               {booksStatebookshop.map((book, index) => (
                 <Link
@@ -418,23 +419,24 @@ const About = ({ addToCart, cartItems, books, handleAddToCartrent }) => {
             </div>
           )} */}
 
-          <Dialog open={dialogshop} onClose={handleClose}>
-            <DialogTitle>Book Description</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                {selectedBookshop?.description}
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Close
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
+            <Dialog open={dialogshop} onClose={handleClose}>
+              <DialogTitle>Book Description</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  {selectedBookshop?.description}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Close
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        )}
         {isAdmin && (
           <div>
-            <CartDashboard />
+            <Dashboard />
           </div>
         )}
         {isAuthenticated && !isAdmin && (

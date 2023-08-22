@@ -333,7 +333,7 @@
 }
 .About-full-container {
   background-color: #f2f2f2;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 .para-contet-Text {
   color: #4d4d4d !important;
@@ -447,3 +447,53 @@
   display: hidden;
 }
 /* page flip */
+/* crossal */
+.carousel-container {
+  width: 100%;
+
+  max-width: 100%;
+
+  margin: 0 auto;
+
+  padding: 20px;
+}
+
+.carousel-item {
+  position: relative;
+}
+
+.carousel-item img {
+  width: 100%;
+
+  height: 600px;
+
+  border-radius: 8px;
+}
+
+.carousel-overlay {
+  position: absolute;
+
+  bottom: 0;
+
+  left: 0;
+
+  right: 0;
+
+  background-color: rgba(0, 0, 0, 0.7);
+
+  padding: 10px;
+
+  border-bottom-left-radius: 8px;
+
+  border-bottom-right-radius: 8px;
+
+  color: white;
+}
+
+.carousel-overlay h1 {
+  margin: 0;
+
+  font-size: 16px;
+
+  text-align: center;
+}
